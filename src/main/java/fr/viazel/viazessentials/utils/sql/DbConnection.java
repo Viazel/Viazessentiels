@@ -30,6 +30,7 @@ public class DbConnection {
             try {
                 if (!this.connection.isClosed()){
                     this.connection.close();
+                    Main.getInstance().getLogger().info("Shutting down database " + dbCredentials.getDbname());
                 }
             } catch (SQLException e) {
                 e.printStackTrace();

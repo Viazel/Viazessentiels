@@ -4,3 +4,8 @@ version: 1.0
 api-version: 1.8
 author: Viazel
 description: It's a plugin to show my skills in Minecraft's Plugin making !
+commands:
+  spawn:
+    description: qosfh
+  setspawn:
+    description: aoqiudhf
