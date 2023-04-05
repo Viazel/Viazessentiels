@@ -1,3 +1,13 @@
 messages:
   welcome: 'Bienvenue sur ce serveur tout simplement incroyable'
   salut: 'Comment ils vont les gens'
+
+
+# SQL
+useSQL: false
+tablename: "viazel"
+host: "this his your host"
+password: "your password"
+user: "your user"
+dbname: "The name of your database"
+port: 3306

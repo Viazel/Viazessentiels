@@ -31,6 +31,28 @@ public class ConfigFile {
         return messages.get(message);
     }
 
+    public boolean getUseSql() {
+        return fileConfiguration.getBoolean("useSQL");
+    }
+    public String getHost() {
+        return fileConfiguration.getString("host");
+    }
+    public String getTableName() {
+        return fileConfiguration.getString("tablename");
+    }
+    public String getPassword() {
+        return fileConfiguration.getString("password");
+    }
+    public String getUser() {
+        return fileConfiguration.getString("user");
+    }
+    public String getDbName() {
+        return fileConfiguration.getString("dbname");
+    }
+    public int getPort() {
+        return fileConfiguration.getInt("port");
+    }
+
     private void error(String message) {
         try {
             throw new Exception(message);
