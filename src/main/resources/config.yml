@@ -1,20 +1,21 @@
+# ---------------------------------------------
+#                   Messages
+# ---------------------------------------------
 messages:
   welcome: 'Bienvenue sur ce serveur tout simplement incroyable'
   salut: 'Comment ils vont les gens'
 
-sql:
-  useSQL: false
-  tablename: "viazel"
-  host: "this his your host"
-  password: "your password"
-  user: "your user"
-  dbname: "The name of your database"
-  port: 3306
-
-spawn:
-  x: 0
-  y: 0
-  z: 0
-  yaw: 0
-  pitch: 0
-  world: "world"
+# ---------------------------------------------
+#                     SQL
+# ---------------------------------------------
+#
+# with userSQL = false | true you can choose if you want a db or not
+#
+# ---------------------------------------------
+useSQL: false
+tablename: "viazel"
+host: "this his your host"
+password: "your password"
+user: "your user"
+dbname: "The name of your database"
+port: 3306

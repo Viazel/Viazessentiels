@@ -9,12 +9,6 @@ import org.bukkit.entity.Player;
 
 public class SpawnCommand implements CommandExecutor {
 
-    private ConfigFile configFile;
-
-    public SpawnCommand(ConfigFile configFile) {
-        this.configFile = configFile;
-    }
-
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
@@ -24,6 +18,7 @@ public class SpawnCommand implements CommandExecutor {
         }
 
         Player p = (Player) sender;
+        ConfigFile configFile = new ConfigFile();
 
         p.teleport(configFile.getSpawn());
         p.sendMessage("Vous avez été téléporté au spawn du serveur !");

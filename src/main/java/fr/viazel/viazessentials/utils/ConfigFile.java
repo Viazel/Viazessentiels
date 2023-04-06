@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,10 +14,21 @@ import java.util.Map;
 
 public class ConfigFile {
     private final FileConfiguration fileConfiguration;
+    private final FileConfiguration fileSpawnConfiguration;
     private final Map<String, String> messages;
-
+    private final File spawnFile;
     public ConfigFile() {
         fileConfiguration = Main.getInstance().getConfig();
+        spawnFile = new File(Main.getInstance().getDataFolder(), "spawn.yml");
+        fileSpawnConfiguration = YamlConfiguration.loadConfiguration(spawnFile);
+        if(!spawnFile.exists()) {
+            try {
+                spawnFile.createNewFile();
+                setSpawnLocation(new Location(Bukkit.getWorld("world"), 0, 0, 0));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
         messages = new HashMap<>();
 
         fileConfiguration.getConfigurationSection("messages").getValues(false).forEach((s, o) -> {
@@ -33,47 +45,48 @@ public class ConfigFile {
     }
 
     public void setSpawnLocation(Location l) {
-        fileConfiguration.set("spawn.x", l.getBlockX());
-        fileConfiguration.set("spawn.y", l.getBlockY());
-        fileConfiguration.set("spawn.z", l.getBlockZ());
-        fileConfiguration.set("spawn.yaw", l.getYaw());
-        fileConfiguration.set("spawn.pitch", l.getPitch());
-        fileConfiguration.set("spawn.world", l.getWorld().getName());
+        fileSpawnConfiguration.set("spawn.x", l.getBlockX());
+        fileSpawnConfiguration.set("spawn.y", l.getBlockY());
+        fileSpawnConfiguration.set("spawn.z", l.getBlockZ());
+        fileSpawnConfiguration.set("spawn.yaw", l.getYaw());
+        fileSpawnConfiguration.set("spawn.pitch", l.getPitch());
+        fileSpawnConfiguration.set("spawn.world", l.getWorld().getName());
 
-        save();
+        saveSpawn();
     }
 
     public Location getSpawn() {
-        int x = fileConfiguration.getInt("spawn.x");
-        int y = fileConfiguration.getInt("spawn.y");
-        int z = fileConfiguration.getInt("spawn.z");
-        float yaw = (float) fileConfiguration.getDouble("spawn.yaw");
-        float pitch = (float) fileConfiguration.getDouble("spawn.pitch");
-        World world = Bukkit.getWorld(fileConfiguration.getString("spawn.world"));
+
+        int x = fileSpawnConfiguration.getInt("spawn.x");
+        int y = fileSpawnConfiguration.getInt("spawn.y");
+        int z = fileSpawnConfiguration.getInt("spawn.z");
+        float yaw = (float) fileSpawnConfiguration.getDouble("spawn.yaw");
+        float pitch = (float) fileSpawnConfiguration.getDouble("spawn.pitch");
+        World world = Bukkit.getWorld(fileSpawnConfiguration.getString("spawn.world"));
 
         return new Location(world, x, y, z, yaw, pitch);
     }
 
     public boolean getUseSql() {
-        return fileConfiguration.getBoolean("sql.useSQL");
+        return fileConfiguration.getBoolean("useSQL");
     }
     public String getHost() {
-        return fileConfiguration.getString("sql.host");
+        return fileConfiguration.getString("host");
     }
     public String getTableName() {
-        return fileConfiguration.getString("sql.tablename");
+        return fileConfiguration.getString("tablename");
     }
     public String getPassword() {
-        return fileConfiguration.getString("sql.password");
+        return fileConfiguration.getString("password");
     }
     public String getUser() {
-        return fileConfiguration.getString("sql.user");
+        return fileConfiguration.getString("user");
     }
     public String getDbName() {
-        return fileConfiguration.getString("sql.dbname");
+        return fileConfiguration.getString("dbname");
     }
     public int getPort() {
-        return fileConfiguration.getInt("sql.port");
+        return fileConfiguration.getInt("port");
     }
 
     private void error(String message) {
@@ -84,9 +97,9 @@ public class ConfigFile {
         }
     }
 
-    private void save() {
+    private void saveSpawn() {
         try {
-            fileConfiguration.save(new File(Main.getInstance().getDataFolder(), "config.yml"));
+            fileSpawnConfiguration.save(spawnFile);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

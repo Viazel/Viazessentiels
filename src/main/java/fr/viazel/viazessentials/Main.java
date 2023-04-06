@@ -4,16 +4,19 @@ import fr.viazel.viazessentials.commands.SetSpawnCommand;
 import fr.viazel.viazessentials.commands.SpawnCommand;
 import fr.viazel.viazessentials.events.MainEvent;
 import fr.viazel.viazessentials.utils.ConfigFile;
+import fr.viazel.viazessentials.utils.config.SimpleConfig;
+import fr.viazel.viazessentials.utils.config.SimpleConfigManager;
 import fr.viazel.viazessentials.utils.sql.DataBaseManager;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.sql.Connection;
 
 public class Main extends JavaPlugin {
 
     private static Main instance;
-    private ConfigFile configFile;
+    public ConfigFile configFile;
     private DataBaseManager dataBaseManager;
 
     public static Main getInstance() {
@@ -23,35 +26,32 @@ public class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
+        saveDefaultConfig();
         configFile = new ConfigFile();
         PluginManager pm = getServer().getPluginManager();
         getServer().getLogger().info("The plugin is starting...s");
-        getCommand("spawn").setExecutor(new SpawnCommand(configFile));
-        getCommand("setspawn").setExecutor(new SetSpawnCommand(configFile));
+        getCommand("spawn").setExecutor(new SpawnCommand());
+        getCommand("setspawn").setExecutor(new SetSpawnCommand());
         pm.registerEvents(new MainEvent(this), this);
-        saveFiles();
-        connectionSql(configFile);
+        connectionSql();
     }
 
     public Connection getConnection() {
         return dataBaseManager.getConnection().getConnection();
     }
 
-    private void connectionSql(ConfigFile configFile) {
+    private void connectionSql() {
 
         if(!configFile.getUseSql()) return;
 
-        this.dataBaseManager = new DataBaseManager(this.configFile);
+        this.dataBaseManager = new DataBaseManager(configFile);
 
     }
 
     @Override
     public void onDisable() {
         getServer().getLogger().info("The plugin is shutting down...");
-        this.dataBaseManager.close();
-    }
-
-    public void saveFiles() {
-        saveDefaultConfig();
+        if(configFile.getUseSql())
+            dataBaseManager.close();
     }
 }

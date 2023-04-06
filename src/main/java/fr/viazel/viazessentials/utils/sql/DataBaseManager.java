@@ -26,7 +26,7 @@ public class DataBaseManager {
         try {
             ResultSet rs = connection.getMetaData().getTables(null, null, configFile.getTableName(), null);
             if(!rs.next()) {
-                connection.createStatement().executeUpdate("CREATE TABLE " + configFile.getTableName() + "( id INT PRIMARY KEY NOT NULL, nom VARCHAR(100) )");
+                connection.createStatement().executeUpdate("CREATE TABLE " + configFile.getTableName() + "( id VARCHAR(255) PRIMARY KEY NOT NULL, nom VARCHAR(100) )");
                 info("The table " + configFile.getTableName() + " has created");
             }
         } catch (SQLException e) {
