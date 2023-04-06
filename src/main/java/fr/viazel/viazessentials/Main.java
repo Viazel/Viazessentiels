@@ -4,8 +4,6 @@ import fr.viazel.viazessentials.commands.SetSpawnCommand;
 import fr.viazel.viazessentials.commands.SpawnCommand;
 import fr.viazel.viazessentials.events.MainEvent;
 import fr.viazel.viazessentials.utils.ConfigFile;
-import fr.viazel.viazessentials.utils.config.SimpleConfig;
-import fr.viazel.viazessentials.utils.config.SimpleConfigManager;
 import fr.viazel.viazessentials.utils.sql.DataBaseManager;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
