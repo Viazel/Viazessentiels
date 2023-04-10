@@ -7,8 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class SpawnCommand implements CommandExecutor {
-
+public class FeedCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
@@ -18,10 +17,16 @@ public class SpawnCommand implements CommandExecutor {
         }
 
         Player p = (Player) sender;
-        ConfigFile configFile = new ConfigFile();
 
-        p.teleport(configFile.getSpawn());
-        p.sendMessage(configFile.getMessages("spawn"));
+        if(!p.hasPermission("viazessentials.feed")) {
+            p.sendMessage(new ConfigFile().getMessages("permission-denied").replace("{command}", "feed"));
+            return false;
+        }
+
+        p.setFoodLevel(20);
+        p.setSaturation(20);
+
+        p.sendMessage(new ConfigFile().getMessages("feed"));
 
         return false;
     }

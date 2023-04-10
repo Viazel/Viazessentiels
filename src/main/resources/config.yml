@@ -2,8 +2,11 @@
 #                   Messages
 # ---------------------------------------------
 messages:
-  welcome: 'Bienvenue sur ce serveur tout simplement incroyable'
-  salut: 'Comment ils vont les gens'
+  welcome: "&aBienvenue sur ce serveur tout simplement incroyable"
+  permission-denied: "&c» Vous n'avez pas le droit d'utiliser la commande {command}"
+  spawn: "&a» Vous vous êtes téléporté au spawn !"
+  setspawn: "&a» Vous avez définie la position du spawn !"
+  feed: "&a» Vous avez été rassasié !"
 
 # ---------------------------------------------
 #                     SQL
@@ -13,9 +16,9 @@ messages:
 #
 # ---------------------------------------------
 useSQL: false
-tablename: "viazel"
 host: "this his your host"
-password: "your password"
 user: "your user"
+password: "your password"
 dbname: "The name of your database"
+tablename: "viazel"
 port: 3306

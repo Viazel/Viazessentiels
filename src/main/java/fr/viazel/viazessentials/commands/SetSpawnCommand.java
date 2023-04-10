@@ -18,10 +18,16 @@ public class SetSpawnCommand implements CommandExecutor {
         }
 
         Player p = (Player) sender;
+
+        if(!p.hasPermission("viazessentials.spawn")) {
+            p.sendMessage(new ConfigFile().getMessages("permission-denied").replace("{command}", "setspawn"));
+            return false;
+        }
+
         ConfigFile configFile = new ConfigFile();
 
         configFile.setSpawnLocation(p.getLocation());
-        p.sendMessage("Vous avez set le spawn location !");
+        p.sendMessage(configFile.getMessages("setspawn"));
 
         return false;
     }

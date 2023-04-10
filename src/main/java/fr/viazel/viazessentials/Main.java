@@ -1,5 +1,6 @@
 package fr.viazel.viazessentials;
 
+import fr.viazel.viazessentials.commands.FeedCommand;
 import fr.viazel.viazessentials.commands.SetSpawnCommand;
 import fr.viazel.viazessentials.commands.SpawnCommand;
 import fr.viazel.viazessentials.events.MainEvent;
@@ -7,8 +8,6 @@ import fr.viazel.viazessentials.utils.ConfigFile;
 import fr.viazel.viazessentials.utils.sql.DataBaseManager;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.io.File;
 import java.sql.Connection;
 
 public class Main extends JavaPlugin {
@@ -30,6 +29,7 @@ public class Main extends JavaPlugin {
         getServer().getLogger().info("The plugin is starting...s");
         getCommand("spawn").setExecutor(new SpawnCommand());
         getCommand("setspawn").setExecutor(new SetSpawnCommand());
+        getCommand("feed").setExecutor(new FeedCommand());
         pm.registerEvents(new MainEvent(this), this);
         connectionSql();
     }

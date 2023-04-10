@@ -9,6 +9,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,7 +34,14 @@ public class ConfigFile {
         messages = new HashMap<>();
 
         fileConfiguration.getConfigurationSection("messages").getValues(false).forEach((s, o) -> {
-            messages.put(s, o.toString());
+            byte b[] = o.toString().getBytes();
+            String result = null;
+            try {
+                result = new String(b, "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                throw new RuntimeException(e);
+            }
+            messages.put(s, result.replace('&', '§'));
         });
     }
 
